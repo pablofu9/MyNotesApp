@@ -234,6 +234,7 @@ extension MainView {
                 withAnimation(.smooth(duration: 0.25)) {
                     if showSearch {
                         showSearch.toggle()
+                        searchText = ""
                     }
                     isFocused = false
                 }
