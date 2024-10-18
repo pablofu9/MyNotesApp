@@ -4,13 +4,15 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
-		<string>proximanova-black.otf</string>
+		<string>proximanova-black.ttf</string>
 		<string>proximanova-blackit.otf</string>
 		<string>proximanova-bold.otf</string>
 		<string>proximanova-boldit.otf</string>
 		<string>proximanova-extrabold.otf</string>
 		<string>proximanova-light.otf</string>
-		<string>proximanova-regular.otf</string>
+		<string>proximanova-regular.ttf</string>
 	</array>
+    <key>NSCalendarsUsageDescription</key>
+    <string>This app requires access to your calendar to add events.</string>
 </dict>
 </plist>
