@@ -25,6 +25,8 @@ struct NoteDetailView: View {
     @State private var EKevent: EKEvent?
     @State private var store = EKEventStore()
     @State private var buttonbackPressed: Bool = false
+    @EnvironmentObject var languageManager: LanguageManager
+    @AppStorage("MyLanguages") var currentLanguage: String = Locale.current.language.languageCode?.identifier ?? "en"
     
     // MARK: - INIT
     
@@ -149,7 +151,7 @@ extension NoteDetailView {
                         .overlay(alignment: .bottom) {
                             if title.isEmpty {
                                 HStack {
-                                    Text("Title...")
+                                    Text("NOTE_DETAIL_TITLE".localised(using: currentLanguage))
                                         .foregroundStyle(Color.darkGrayColor.opacity(0.4))
                                         .font(.custom(FontNames.kProximaNovaLight, size: 26))
                                     Spacer()
@@ -174,7 +176,7 @@ extension NoteDetailView {
                         .overlay(alignment: .center) {
                             if subtitle.isEmpty {
                                 HStack {
-                                    Text("Subtitle...")
+                                    Text("NOTE_DETAIL_SUBTITLE".localised(using: currentLanguage))
                                         .foregroundStyle(Color.darkGrayColor.opacity(0.4))
                                         .font(.custom(FontNames.kProximaNovaLight, size: 18))
                                     Spacer()
@@ -194,7 +196,7 @@ extension NoteDetailView {
                         .overlay(alignment: .center) {
                             if content.isEmpty {
                                 HStack {
-                                    Text("Start typing here...")
+                                    Text("NOTE_DETAIL_START_TYPING".localised(using: currentLanguage))
                                         .foregroundStyle(Color.darkGrayColor.opacity(0.4))
                                         .font(.custom(FontNames.kProximaNovaRegular, size: 16))
                                     Spacer()
@@ -240,7 +242,7 @@ extension NoteDetailView {
                     dismiss()
                 }
             } label: {
-                Label("Delete", systemImage: "trash")
+                Label("DELETE".localised(using: currentLanguage), systemImage: "trash")
                     .tint(.warningRedColor)
             }
         }
@@ -259,7 +261,7 @@ extension NoteDetailView {
             }
             
         } label: {
-            Label("Add to calendar", systemImage: "calendar.badge.plus")
+            Label("NOTE_DETAIL_ADD_CALENDAR".localised(using: currentLanguage), systemImage: "calendar.badge.plus")
         }
     }
     
@@ -270,7 +272,7 @@ extension NoteDetailView {
                 shareNote()
             }
         } label: {
-            Label("Share note", systemImage: "square.and.arrow.up")
+            Label("NOTE_DETAIL_SHARE_NOTE".localised(using: currentLanguage), systemImage: "square.and.arrow.up")
         }
         
     }
@@ -298,19 +300,19 @@ extension NoteDetailView {
     }
     
     private func saveChangesIfNeeded() {
-           if let note {
-               if note.title != title || note.subtitle != subtitle || note.text != content {
-                   note.title = title
-                   note.subtitle = subtitle
-                   note.text = content
-               }
-           } else {
-               if !title.isEmpty || !subtitle.isEmpty || !content.isEmpty {
-                   let newNote = Notes(id: UUID(), title: title, subtitle: subtitle, text: content, date: .now)
-                   context.insert(newNote)
-               }
-           }
-       }
+        if let note {
+            if note.title != title || note.subtitle != subtitle || note.text != content {
+                note.title = title
+                note.subtitle = subtitle
+                note.text = content
+            }
+        } else {
+            if !title.isEmpty || !subtitle.isEmpty || !content.isEmpty {
+                let newNote = Notes(id: UUID(), title: title, subtitle: subtitle, text: content, date: .now)
+                context.insert(newNote)
+            }
+        }
+    }
     
 }
 

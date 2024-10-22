@@ -62,11 +62,11 @@ final class Notes: Identifiable {
     var dateDescriptionShort: String {
         switch dateDescription {
         case .now:
-            return "Right now"
+            return "RIGHT_NOW".localized
         case .today:
-            return "Today"
+            return "TODAY".localized
         case .yesterday:
-            return "Yesterday"
+            return "YESTERDAY".localized
         case .formatted(let date):
             return date
         }

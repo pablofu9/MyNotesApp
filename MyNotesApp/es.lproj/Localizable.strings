@@ -1,0 +1,42 @@
+/*
+  Localizable.strings
+  MyNotesApp
+
+  Created by Pablo Fuertes on 22/10/24.
+  
+*/
+
+/*************************************/
+// MARK: - COMMON
+/*************************************/
+
+"SHARE"                                         = "Compartir";
+"DELETE"                                        = "Eliminar";
+"NOTES"                                         = "Mis notas";
+"SEARCH"                                        = "Buscar";
+"CANCEL"                                        = "Cancelar";
+"MENU"                                          = "Menu";
+"SETTINGS"                                      = "Ajustes";
+"ABOUT_US"                                      = "Sobre nosotros";
+"LANGUAGE"                                      = "Idioma";
+
+// FILTER
+
+"ORDER_BY"                                      = "Ordenar por";
+"ORDER_APLHABETIC"                              = "Alfabéticamente";
+"ORDER_DATE_ASC"                                = "Fecha ASC";
+"ORDER_DATE_DESC"                               = "Fecha DESC";
+
+// DATES AND TIMES
+
+"RIGHT_NOW"                                     = "Ahora mismo";
+"TODAY"                                         = "Hoy";
+"YESTERDAY"                                     = "Ayer";
+
+// NOTE DETAIL VIEW
+
+"NOTE_DETAIL_TITLE"                             = "Título...";
+"NOTE_DETAIL_SUBTITLE"                          = "Subtítulo...";
+"NOTE_DETAIL_START_TYPING"                      = "Empieza a escribir aquí...";
+"NOTE_DETAIL_SHARE_NOTE"                        = "Compartir nota";
+"NOTE_DETAIL_ADD_CALENDAR"                      = "Añadir al calendario";

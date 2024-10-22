@@ -10,6 +10,9 @@ import SwiftData
 
 @main
 struct MyNotesAppApp: App {
+    
+    @StateObject var languageManager = LanguageManager()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Notes.self,
@@ -26,6 +29,7 @@ struct MyNotesAppApp: App {
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(languageManager)
         }
         .modelContainer(sharedModelContainer)
     }
