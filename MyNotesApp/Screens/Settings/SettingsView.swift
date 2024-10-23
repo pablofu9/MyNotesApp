@@ -19,35 +19,14 @@ struct SettingsView: View {
     @State private var selectedLanguageIndex = 0
     
     var body: some View {
-        
-        ZStack {
-            LazyVStack(alignment: .leading, spacing: 20) {
-                Text("SETTINGS".localised(using: currentLanguage))
-                    .font(.custom(FontNames.kProximaNovaExtraBold, size: 34))
-                    .foregroundStyle(Color.customWhiteColor)
-                Divider()
-                    .frame(height: 2)
-                    .background(Color.customWhiteColor.opacity(0.2))
-                
-                settingsRowLanguage(text: "LANGUAGE".localised(using: currentLanguage), image: "globe", action: {
-                })
-                .padding(.top, 30)
-             
-            }
-            .padding(.horizontal, 25)
-            .padding(.top, UIView.safeAreaTop)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .ignoresSafeArea()
-        .background(Color.darkGrayColor)
-
+        content
     }
 }
 
 extension SettingsView {
     
     @ViewBuilder
-    private func settingsRowLanguage(text: String, image: String, action: @escaping () -> ()) -> some View {
+    private func settingsRowLanguage(text: String, image: String) -> some View {
         GeometryReader { proxy in
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 20) {
@@ -108,6 +87,34 @@ extension SettingsView {
                 }
             }
         }
+    }
+    
+    @ViewBuilder
+    private func darkLightMode(proxy: GeometryProxy) -> some View {
+        
+    }
+    
+    @ViewBuilder
+    private var content: some View {
+        ZStack {
+            LazyVStack(alignment: .leading, spacing: 20) {
+                Text("SETTINGS".localised(using: currentLanguage))
+                    .font(.custom(FontNames.kProximaNovaExtraBold, size: 34))
+                    .foregroundStyle(Color.customWhiteColor)
+                Divider()
+                    .frame(height: 2)
+                    .background(Color.customWhiteColor.opacity(0.2))
+                
+                settingsRowLanguage(text: "LANGUAGE".localised(using: currentLanguage), image: "globe")
+                .padding(.top, 30)
+             
+            }
+            .padding(.horizontal, 25)
+            .padding(.top, UIView.safeAreaTop)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .ignoresSafeArea()
+        .background(Color.darkGrayColor)
     }
     
 }

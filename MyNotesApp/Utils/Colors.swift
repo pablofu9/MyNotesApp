@@ -14,4 +14,9 @@ extension Color {
     static let primaryBlueColor                        = Color("primaryBlue")
     static let softGreenColor                          = Color("softGreen")
     static let warningRedColor                         = Color("warningRed")
+    static let customBlackColor                        = Color("blackColor")
+    static let primaryColor                            = Color("primaryColor")
+    static let backgroundColor                         = Color("backgroundColor")
+    static let secondaryColor                          = Color("secondaryColor")
+    static let customAccentColor                       = Color("customAccent")
 }

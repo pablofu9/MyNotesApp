@@ -87,7 +87,7 @@ extension MainView {
             }
         }()
       
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 1) {
             ForEach(sortedNotes) { note in
                 NavigationLink(value: note) {
                     NoteRowView(note: note)
@@ -112,13 +112,11 @@ extension MainView {
             }
             
         }
-        .padding(.horizontal, 20)
-        .frame(maxWidth: .infinity, alignment: .leading)
         .overlay {
             if showSearch && searchText.isEmpty {
                 Rectangle()
                     .blur(radius: 10)
-                    .foregroundStyle(Color.customWhiteColor.opacity(0.5))
+                    .foregroundStyle(Color.primaryColor.opacity(0.25))
             }
         }
     }
@@ -132,7 +130,6 @@ extension MainView {
                     if !showSearch {
                         HStack {
                             showMenuButton
-                            headerTitle
                         }
                     }
                     Spacer()
@@ -143,41 +140,32 @@ extension MainView {
                         filterIcon
                         searchButton
                     }
-                   
                 }
             }
             .padding(.top, UIView.safeAreaTop)
             .padding(.bottom, 20)
-            .padding(.horizontal, 15)
+            .padding(.trailing, showSearch ? 20 : 0)
+            .padding(.horizontal, !showSearch ? 20 : 0)
             .background {
                 Rectangle()
-                    .stroke(Color.lightGrayColor,lineWidth: isScrollingDown ? 0 : 1)
-                    .background(Color.customWhiteColor)
-                    .shadow(radius: isScrollingDown  ? 5 : 0)
-                
+                    .foregroundStyle(Color.customWhiteColor)
+                    .shadow(color: Color.primaryColor.opacity(0.2), radius: 4, x: 0, y: 3)
             }
             .offset(y: -minY)
         }
-        .frame(height:60)
-    }
-    
-    @ViewBuilder
-    private var headerTitle: some View {
-        Text("NOTES".localised(using: currentLanguage))
-            .font(.custom(FontNames.kProximaNovaExtraBold, size: 22))
-            .foregroundStyle(Color.black)
-            .animation(.easeInOut(duration: 0.5), value: !showSearch)
+        .frame(height: Constants.kHeaderHeight)
     }
     
     @ViewBuilder
     private var searchField: some View {
         TextField("SEARCH".localised(using: currentLanguage), text: $searchText)
+            .frame(height: 21)
             .padding(.vertical, 5)
             .padding(.leading, 10)
             .tint(.red)
             .background {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.thickMaterial)
+                    .foregroundStyle(Color.secondaryColor.opacity(0.20))
                     .shadow(color: Color.darkGrayColor.opacity(0.1), radius: 2)
             }
             .focused($isFocused)
@@ -235,8 +223,8 @@ extension MainView {
             }
         } label: {
             Text("CANCEL".localised(using: currentLanguage))
-                .font(.custom(FontNames.kProximaNovaLight, size: 18))
-                .foregroundStyle(Color.darkGrayColor.opacity(0.5))
+                .font(.custom(FontNames.kProximaNovaRegular, size: 13))
+                .foregroundStyle(Color.secondaryColor)
         }
     }
     
@@ -246,19 +234,20 @@ extension MainView {
             NoteDetailView(note: nil)
                 .navigationTransition(.zoom(sourceID: addButtonID, in: animation))
         } label : {
-            Image(systemName: "document.badge.plus")
-                .resizable()
-                .frame(width: 30, height: 30)
-                .padding(20)
+            Text("+")
+                .font(.custom(FontNames.kProximaNovaRegular, size: 45))
+                .frame(width: 60, height: 60)
                 .foregroundStyle(Color.customWhiteColor)
-                .background(Color.softGreenColor)
-                .clipShape(Circle())
-                .shadow(color: Color.darkGrayColor.opacity(0.4), radius: 5)
-        }
-        .padding(30)
-        .matchedTransitionSource(id: addButtonID, in: animation)
+                .background {
+                    Circle()
+                        .foregroundStyle(Color.customAccentColor)
+                        .shadow(color: Color.primaryColor.opacity(0.4), radius: 4, x: 2, y: 3)
 
-        
+                }
+        }
+        .padding(.bottom, UIView.safeAreaBottom + 40)
+        .padding(.horizontal, 35)
+        .matchedTransitionSource(id: addButtonID, in: animation)
     }
     
     @ViewBuilder
@@ -266,15 +255,9 @@ extension MainView {
         ZStack(alignment: .bottomTrailing) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    if notes.isEmpty {
-                        ContentUnavailableView("Notes are empty.", systemImage: "list.clipboard")
-                            .padding(.top, 120)
-                    } else {
-                        notesListView()
-                            .padding(.top, 120)
-                    }
+                    notesListView()
+                        .padding(.top, UIView.safeAreaTop + Constants.kHeaderHeight)
                 }
-                
                 .overlay(alignment: .top) {
                     headerView()
                 }
@@ -299,6 +282,7 @@ extension MainView {
             }
             addButton
         }
+        .background(Color.backgroundColor)
         .ignoresSafeArea()
     }
     
@@ -311,6 +295,7 @@ extension MainView {
                         .navigationTransition(.zoom(sourceID: note.id, in: animation))
                 }
         }
+       
     }
     
     @ViewBuilder

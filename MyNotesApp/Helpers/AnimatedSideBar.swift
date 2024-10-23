@@ -66,7 +66,7 @@ struct AnimatedSideBar<Content: View, MenuView: View, Background: View>: View {
             .offset(x: -sideMenuWidth)
             .offset(x: offsetX)
             .contentShape(.rect)
-            .simultaneousGesture(dragGesture)
+//            .simultaneousGesture(dragGesture)
         }
         .background(background)
         .ignoresSafeArea()
