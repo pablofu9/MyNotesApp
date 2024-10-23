@@ -28,7 +28,7 @@ struct MyNotesAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AppSwitcher()
                 .environmentObject(languageManager)
         }
         .modelContainer(sharedModelContainer)

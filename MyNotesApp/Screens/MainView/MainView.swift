@@ -356,7 +356,6 @@ extension MainView {
     private func shareNote(note: Notes) {
         let noteContent = """
         Title: \(note.title)
-        Subtitle: \(note.subtitle)
         Content: \(note.text)
         """
 

@@ -20,14 +20,12 @@ enum DateComparison {
 final class Notes: Identifiable {
     @Attribute(.unique) var id: UUID
     var title: String
-    var subtitle: String
     var text: String
     var date: Date
     
-    init(id: UUID, title: String, subtitle: String, text: String, date: Date) {
+    init(id: UUID, title: String, text: String, date: Date) {
         self.id = id
         self.title = title
-        self.subtitle = subtitle
         self.text = text
         self.date = date
     }

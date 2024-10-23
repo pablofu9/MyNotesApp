@@ -34,7 +34,6 @@ struct NoteDetailView: View {
         self.note = note
         if let note = note {
             _title = .init(initialValue: note.title)
-            _subtitle = .init(initialValue: note.subtitle)
             _content = .init(initialValue: note.text)
         }
     }
@@ -82,24 +81,23 @@ extension NoteDetailView {
                         Text("")
                             .frame(height: 20)
                     }
-
+                    
                     Spacer()
                     menuButton
                 }
                 .padding(.top, UIView.safeAreaTop)
                 .padding(.bottom, 20)
-                .padding(.horizontal, 15)
+                .padding(.horizontal, 20)
                 .background {
                     Rectangle()
-                        .stroke(Color.lightGrayColor, lineWidth: isScrollingDown ? 0 : 1)
-                        .background(Color.customWhiteColor)
-                        .shadow(radius: isScrollingDown  ? 5 : 0)
+                        .foregroundStyle(Color.customWhiteColor)
+                        .shadow(color: Color.primaryColor.opacity(0.2), radius: 4, x: 0, y: 3)
                 }
                 .offset(y: -minY)
             }
+           
         }
-        .frame(height: 60)
-        .frame(maxHeight: 60)
+        .frame(height: Constants.kHeaderHeight)
     }
     
     @ViewBuilder
@@ -111,8 +109,9 @@ extension NoteDetailView {
                 dismiss()
             }
         } label: {
-            Image(systemName: "arrow.left")
-                .foregroundStyle(Color.darkGrayColor)
+            Image(.arrowBack)
+                .resizable()
+                .frame(width: 46, height: 41)
         }
     }
     
@@ -124,8 +123,10 @@ extension NoteDetailView {
             Divider()
             deleteButton
         } label: {
-            Image(systemName: "pencil")
-                .foregroundStyle(Color.darkGrayColor)
+            Image(.editIcon)
+                .resizable()
+                .frame(width: 25, height: 25)
+                
 
         }
         .menuStyle(.borderlessButton)
@@ -144,7 +145,7 @@ extension NoteDetailView {
                         .padding(.horizontal, 4)
                         .overlay(alignment: .bottom) {
                             Rectangle()
-                                .foregroundStyle(Color.darkGrayColor.opacity(0.7))
+                                .foregroundStyle(Color.primaryColor.opacity(0.4))
                                 .frame(height: 1)
                                 .offset(y: 3)
                         }
@@ -152,33 +153,8 @@ extension NoteDetailView {
                             if title.isEmpty {
                                 HStack {
                                     Text("NOTE_DETAIL_TITLE".localised(using: currentLanguage))
-                                        .foregroundStyle(Color.darkGrayColor.opacity(0.4))
+                                        .foregroundStyle(Color.primaryColor.opacity(0.4))
                                         .font(.custom(FontNames.kProximaNovaLight, size: 26))
-                                    Spacer()
-                                }
-                                .padding(.leading, 8)
-                            }
-                        }
-                        .background(Color.clear)
-            TextEditor(text: $subtitle)
-                        .frame(minHeight: 40, maxHeight: 70)
-                        .lineLimit(2)
-                        .foregroundStyle(Color.darkGrayColor)
-                        .font(.custom(FontNames.kProximaNovaBlack, size: 18))
-                        .tint(Color.warningRedColor)
-                        .padding(.horizontal, 4)
-                        .overlay(alignment: .bottom) {
-                            Rectangle()
-                                .foregroundStyle(Color.darkGrayColor.opacity(0.3))
-                                .frame(height: 1)
-                                .offset(y: 3)
-                        }
-                        .overlay(alignment: .center) {
-                            if subtitle.isEmpty {
-                                HStack {
-                                    Text("NOTE_DETAIL_SUBTITLE".localised(using: currentLanguage))
-                                        .foregroundStyle(Color.darkGrayColor.opacity(0.4))
-                                        .font(.custom(FontNames.kProximaNovaLight, size: 18))
                                     Spacer()
                                 }
                                 .padding(.leading, 8)
@@ -215,7 +191,7 @@ extension NoteDetailView {
         ZStack {
             ScrollView {
                 formView
-                .padding(.top, UIView.safeAreaTop + 60)
+                    .padding(.top, UIView.safeAreaTop + Constants.kHeaderHeight + 30)
                 .overlay(alignment: .top) {
                     headerView()
                 }
@@ -301,14 +277,13 @@ extension NoteDetailView {
     
     private func saveChangesIfNeeded() {
         if let note {
-            if note.title != title || note.subtitle != subtitle || note.text != content {
+            if note.title != title || note.text != content {
                 note.title = title
-                note.subtitle = subtitle
                 note.text = content
             }
         } else {
             if !title.isEmpty || !subtitle.isEmpty || !content.isEmpty {
-                let newNote = Notes(id: UUID(), title: title, subtitle: subtitle, text: content, date: .now)
+                let newNote = Notes(id: UUID(), title: title, text: content, date: .now)
                 context.insert(newNote)
             }
         }
